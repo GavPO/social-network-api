@@ -18,6 +18,14 @@ async function getSingleUser(req, res) {
   }
 }
 
+async function createUser(req, res) {
+  try {
+    const newUser = User.create(req.body);
+  } catch (err) {
+
+  };
+}
+
 module.exports = {
   getAllUsers,
   getSingleUser,
