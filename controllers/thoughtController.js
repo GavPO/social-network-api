@@ -39,7 +39,6 @@ async function createThought(req, res) {
 
 async function updateThought(req, res) {
   try {
-    console.log(req.params.thoughtId)
     const updatedThought = await Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
