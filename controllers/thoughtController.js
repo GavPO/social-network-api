@@ -9,7 +9,7 @@ async function getAllThoughts(_req, res) {
     console.error(err)
     res.status(500).json(err);
   };
-}
+};
 
 async function getSingleThought(req, res) {
   try {
@@ -19,17 +19,23 @@ async function getSingleThought(req, res) {
     console.error(err)
     res.status(500).json(err);
   };
-}
+};
 
 async function createThought(req, res) {
   try {
     const newThought = await Thought.create(req.body);
-    res.status(200).json(newThought);
+    const associatedUser = await User.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $addToSet: { thoughts: newThought._id } },
+        { new: true },
+    ).select('-__v')
+    .populate('thoughts');
+    res.status(200).json(associatedUser);
   } catch (err) {
     console.error(err)
     res.status(500).json(err);
   };
-}
+};
 
 module.exports = {
   getAllThoughts,

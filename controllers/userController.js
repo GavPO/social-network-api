@@ -7,8 +7,8 @@ async function getAllUsers(req, res) {
   } catch (err) {
     console.error(err)
     res.status(500).json(err);
-  }
-}
+  };
+};
 
 async function getSingleUser(req, res) {
   try {
@@ -17,17 +17,18 @@ async function getSingleUser(req, res) {
   } catch (err) {
     console.error(err)
     res.status(500).json(err);
-  }
-}
+  };
+};
 
 async function createUser(req, res) {
   try {
     const newUser = await User.create(req.body);
+    res.status(200).json(newUser);
   } catch (err) {
     console.error(err)
     res.status(500).json(err);
   };
-}
+};
 
 module.exports = {
   getAllUsers,
