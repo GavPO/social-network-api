@@ -37,8 +37,41 @@ async function createThought(req, res) {
   };
 };
 
+async function updateThought(req, res) {
+  try {
+    console.log(req.params.thoughtId)
+    const updatedThought = await Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $set: req.body },
+      { new: true },
+    ).select('-__v');
+    res.status(200).json(updatedThought);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  };
+};
+
+async function deleteThought(req, res) {
+  try {
+    await Thought.findOneAndRemove({ _id: req.params.thoughtId });
+    const associatedUser = await User.findOneAndUpdate(
+      { thoughts: req.params.thoughtId},
+      { $pull: { thoughts: req.params.thoughtId }},
+      { new: true },
+    ).select('-__v')
+    .populate('thoughts');
+    res.status(200).json(associatedUser)
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  };
+};
+
 module.exports = {
   getAllThoughts,
   getSingleThought,
   createThought,
+  updateThought,
+  deleteThought,
 };
