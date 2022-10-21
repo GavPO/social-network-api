@@ -2,14 +2,20 @@ const User = require("../models/User");
 
 async function addFriend(req, res) {
   try {
-    const addedFriend = await User.findOneAndUpdate(
+    const initialUser = await User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { friends: req.params.friendId } },
       { new: true }
     )
       .select("-__v")
+      .select('-thoughts')
       .populate("friends");
-    res.status(200).json(addedFriend);
+    await User.findOneAndUpdate(
+      { _id: req.params.friendId },
+      { $addToSet: { friends: req.params.userId } },
+      { new: true }
+    );
+    res.status(200).json(initialUser);
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -18,14 +24,19 @@ async function addFriend(req, res) {
 
 async function deleteFriend(req, res) {
   try {
-    const removedFriend = await User.findByIdAndUpdate(
+    const initialUser = await User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: { _id: req.params.friendId } } },
+      { $pull: { friends: req.params.friendId} },
       { new: true }
     )
       .select("-__v")
       .populate("friends");
-    res.status(200).json(removedFriend);
+    await User.findOneAndUpdate(
+        { _id: req.params.friendId },
+        { $pull: { friends: req.params.userId} },
+        { new: true }
+      );
+    res.status(200).json(initialUser);
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
