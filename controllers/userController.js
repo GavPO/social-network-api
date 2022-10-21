@@ -1,3 +1,4 @@
+const Thought = require("../models/Thought");
 const User  = require("../models/User");
 
 async function getAllUsers(req, res) {
@@ -47,6 +48,7 @@ async function updateUser(req, res) {
 async function deleteUser(req, res) {
   try {
     const deletedUser = await User.findOneAndRemove({ _id: req.params.userId });
+    await Thought.deleteMany({ _id: { $in: deletedUser.thoughts } })
     res.status(200).json(deletedUser)
   } catch (err) {
     console.error(err);
