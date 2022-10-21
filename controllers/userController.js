@@ -60,5 +60,6 @@ module.exports = {
   getAllUsers,
   getSingleUser,
   createUser,
+  updateUser,
   deleteUser,
 };
