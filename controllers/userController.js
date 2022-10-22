@@ -3,7 +3,8 @@ const User  = require("../models/User");
 
 async function getAllUsers(req, res) {
   try {
-    const allUsers = await User.find();
+    const allUsers = await User.find()
+    .select('-__v');
     res.status(200).json(allUsers);
   } catch (err) {
     console.error(err)
@@ -13,7 +14,10 @@ async function getAllUsers(req, res) {
 
 async function getSingleUser(req, res) {
   try {
-    const singleUser = await User.findOne({ _id: req.params.userId }).select("-__v");
+    const singleUser = await User.findOne({ _id: req.params.userId })
+    .select("-__v")
+    .populate('thoughts')
+    .populate('friends');
     res.status(200).json(singleUser);
   } catch (err) {
     console.error(err)

@@ -3,7 +3,7 @@ const Thought = require('../models/Thought');
 
 async function getAllThoughts(_req, res) {
   try {
-    const allThoughts = await Thought.find();
+    const allThoughts = await Thought.find().select('-__v');
     res.status(200).json(allThoughts);
   } catch (err) {
     console.error(err)
