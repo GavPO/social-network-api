@@ -4,6 +4,8 @@
 
 This project was designed to help the user have a database that can hold a user, that users friends, and thoughts that user has, as well as be able to hold reactions to users thoughts.
 
+Video Link: (https://drive.google.com/file/d/1e9ftWi-MFIQk-co40nyotjJQTKucZwdv/view)
+
 ## Table of Contents 
 
 - [Installation](#installation)
