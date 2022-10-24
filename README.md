@@ -23,7 +23,7 @@ After installing all the required files, run server.js and the API will be runni
 
 ## Screenshot
 
-![Screenshot](./Assets/screenshot.PNG)
+![Screenshot](./assets/screenshot.PNG)
 
 ## Credits
 
